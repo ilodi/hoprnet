@@ -4,7 +4,7 @@ import Link from 'next/link'
 import '../../styles/main.scss'
 import TweetBasodino from '../tweet-basodino'
 
-const Menu = ({ darkMode, chenageMode, activaMenu, hash, copyCodeToClipboard }) => {
+const Menu = ({ darkMode, changeThemeMode, activaMenu, hash, copyCodeToClipboard }) => {
   const router = useRouter()
   return (
     <>
@@ -57,7 +57,7 @@ const Menu = ({ darkMode, chenageMode, activaMenu, hash, copyCodeToClipboard }) 
               Light on dark
               </p>
               <label className="switch">
-              <input type="checkbox" onChange={() => chenageMode()} />
+              <input type="checkbox" onChange={() => changeThemeMode()} />
               <span className="slider round">
                 <img
                   className="icon-darkmode"

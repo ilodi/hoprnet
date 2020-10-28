@@ -29,17 +29,20 @@ const Layout = ({ children }) => {
     }, 4000)
   }
 
-  const chenageMode = () => {
-    if (darkMode) {
-      document.body.classList.add('dark-mode')
-    } else {
-      document.body.classList.remove('dark-mode')
+  const changeThemeMode = () => {
+    if (darkMode !== undefined) {
+      if (darkMode) {
+        document.body.classList.add('dark-mode')
+      } else {
+        document.body.classList.remove('dark-mode')
+      }
     }
   }
+
   useEffect(() => {
-    if (darkMode != undefined) {
+    if (darkMode !== undefined) {
       localStorage.setItem('darkMode', darkMode)
-      chenageMode()
+      changeThemeMode()
     }
   }, [darkMode])
 
@@ -55,9 +58,10 @@ const Layout = ({ children }) => {
       }
     }
     fetchData()
-    let isSet = localStorage.getItem('darkMode')
-    if (isSet) {
-      setDarkMode(isSet === 'true')
+
+    let oValue = localStorage.getItem('darkMode')
+    if (oValue) {
+      setDarkMode(oValue === 'true')
     }
   }, [])
 
@@ -70,12 +74,12 @@ const Layout = ({ children }) => {
         <nav className="navbar only-mobile-view">
           <div className="icon-logo">
             <img
-              src={'/assets/brand/' + [darkMode ? 'logo_white.svg' : 'logo.svg']}
-              className={[activaMenu ? 'open' : '']}
+              src={'/assets/brand/' + (darkMode ? 'logo_white.svg' : 'logo.svg')}
+              className={activaMenu ? 'open' : ''}
               alt="hopr"
             />
           </div>
-          <div className={'icon-menu ' + [activaMenu ? 'open' : '']} onClick={() => setactivaMenu(!activaMenu)}>
+          <div className={'icon-menu ' + (activaMenu ? 'open' : '')} onClick={() => setactivaMenu(!activaMenu)}>
             <span></span>
             <span></span>
             <span></span>
@@ -84,20 +88,19 @@ const Layout = ({ children }) => {
             <span></span>
           </div>
         </nav>
-        {/*  */}
-        <div className=" only-desktop-view ">
+        <div className="only-desktop-view">
           <div className="icon-logo-desktop">
             <a href="https://hoprnet.org/" target="_blank" rel="noopener noreferrer">
-              <img src={'/assets/brand/' + [darkMode ? 'logo_white.svg' : 'logo.svg']} alt="hopr" />
+              <img src={'/assets/brand/' + (darkMode ? 'logo_white.svg' : 'logo.svg')} alt="hopr" />
             </a>
           </div>
           <div className="active-darkmode">
             <label className="switch">
-              <input type="checkbox" onChange={() => setDarkMode(darkMode)} checked={[darkMode ? true : false ]} />
+              <input type="checkbox" onChange={(event) => setDarkMode(event.target.checked)} checked={darkMode ? true : false } />
               <span className="slider round">
                 <img
                   className="icon-darkmode"
-                  src={'/assets/icons/' + [darkMode ? 'luna.svg' : 'dom.svg']}
+                  src={'/assets/icons/' + (darkMode ? 'luna.svg' : 'dom.svg')}
                   alt="hopr darkmode"
                 />
               </span>
@@ -107,7 +110,7 @@ const Layout = ({ children }) => {
       </header>
       <Menu
         darkMode={darkMode}
-        chenageMode={chenageMode}
+        changeThemeMode={changeThemeMode}
         activaMenu={activaMenu}
         hash={hash}
         copyCodeToClipboard={copyCodeToClipboard}
@@ -116,13 +119,12 @@ const Layout = ({ children }) => {
         <div className="only-desktop-view">
           <LeftSide hash={hash} copyCodeToClipboard={copyCodeToClipboard} />
         </div>
-        <section className={'about only-mobile-view ' + [router.pathname != '/' ? 'aux-margin' : '']}>
-          <div className={[router.pathname != '/' ? 'only-desktop-view' : '']}>
+        <section className={'about only-mobile-view ' + (router.pathname != '/' ? 'aux-margin' : '')}>
+          <div className={(router.pathname != '/' ? 'only-desktop-view' : '')}>
             <CopieParagraph />
           </div>
         </section>
         {children}
-        {/*  */}
         <section className="only-mobile-view">
           <hr />
           <DataBoxCloud address={address} channel={channel} />
@@ -133,9 +135,7 @@ const Layout = ({ children }) => {
             Thanks for helping us create the <span> HOPR network. </span>
           </p>
         </section>
-        {/*  */}
         <RightSide address={address} channel={channel} API_LastUpdated={API_LastUpdated} />
-        {/*  */}
       </div>
       <Modal modal={modal} hash={hash} />
     </>
