@@ -7,8 +7,6 @@ import TrCustom from "../components/micro-components/tr-custom";
 import SuperBoxSearch from "../components/micro-components/super-box-search";
 import api from "../utils/api";
 
-
-
 export default function Home() {
   const columnsDefaults = [
     {
@@ -41,6 +39,7 @@ export default function Home() {
       key: "tweetUrl",
     },
   ];
+  
   const [data, setData] = useState(undefined);
   const [columns, setColumns] = useState(columnsDefaults);
   const [searchTerm, setSearchTerm] = useState("");
@@ -86,7 +85,7 @@ export default function Home() {
         }
       }
     }
-    setMatch(count); 
+    setMatch(count);
   }, [searchTerm]);
 
   const getIntBase = (key) => {
